@@ -1,4 +1,12 @@
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        type: string
+        description: pr url
+      pr_id:
+        type: string
+        description: pr id
 
 name: benchmark-test
 
@@ -7,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       -
-        name: ${{ inputs.url }}
+        name: ${{ github.event.inputs.url }}
         uses: actions/checkout@v3
       -
         name: Setup julia
@@ -24,7 +32,7 @@ jobs:
         name: Comment
         uses: peter-evans/create-or-update-comment@v2
         with:
-          issue-number: ${{ inputs.pr_id }}
+          issue-number: ${{ github.event.inputs.pr_id }}
           body: |
             Hi! This is a comment by GitHub Actions!
           token: ${{ secrets.PAT }}
