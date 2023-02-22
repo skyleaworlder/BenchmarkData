@@ -1,0 +1,8 @@
+name = "BenchmarkData"
+uuid = "d471bb62-7260-4f73-89c7-8c9ca7f257db"
+authors = ["skyleaworlder <870033938@qq.com>"]
+version = "0.1.0"
+
+[deps]
+BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
+Flux = "587475ba-b771-5e3f-ad9e-33799f191a9c"

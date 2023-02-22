@@ -1,0 +1,30 @@
+on: workflow_dispatch
+
+name: benchmark-test
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: ${{ inputs.url }}
+        uses: actions/checkout@v3
+      -
+        name: Setup julia
+        uses: julia-actions/setup-julia@v1
+      -
+        name: Build pkg
+        uses: julia-actions/julia-buildpkg@v1
+      -
+        id: benchmark
+        name: Run benchmark
+        run: |
+          flux=true julia --project=. benchmark/benchmarks.jl
+      -
+        name: Comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          issue-number: ${{ inputs.pr_id }}
+          body: |
+            Hi! This is a comment by GitHub Actions!
+          token: ${{ secrets.PAT }}
