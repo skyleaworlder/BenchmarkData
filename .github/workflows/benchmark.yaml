@@ -1,14 +1,17 @@
+name: benchmark-test
+
 on:
   workflow_dispatch:
     inputs:
+      repository:
+        type: string
+        description: repo name
       url:
         type: string
         description: pr url
       pr_id:
         type: string
         description: pr id
-
-name: benchmark-test
 
 jobs:
   benchmark:
@@ -33,6 +36,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: ${{ github.event.inputs.pr_id }}
+          repository: ${{ github.event.inputs.repository }}
           body: |
             Hi! This is a comment by GitHub Actions!
           token: ${{ secrets.PAT }}
