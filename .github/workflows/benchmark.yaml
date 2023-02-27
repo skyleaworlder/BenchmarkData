@@ -39,4 +39,3 @@ jobs:
           repository: ${{ github.event.inputs.repository }}
           body: |
             Hi! This is a comment by GitHub Actions!
-          token: ${{ secrets.PAT }}
