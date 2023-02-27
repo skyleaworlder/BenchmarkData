@@ -37,5 +37,6 @@ jobs:
         with:
           issue-number: ${{ github.event.inputs.pr_id }}
           repository: ${{ github.event.inputs.repository }}
+          token: ${{ secrets.APP_CLIENT_TOKEN }}
           body: |
             Hi! This is a comment by GitHub Actions!
