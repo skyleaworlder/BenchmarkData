@@ -60,4 +60,4 @@ jobs:
           issue-number: ${{ github.event.inputs.pr_id }}
           repository: ${{ github.event.inputs.repository }}
           token: ${{ secrets.PAT }}
-          body-path: report.md
+          body-file: report.md
