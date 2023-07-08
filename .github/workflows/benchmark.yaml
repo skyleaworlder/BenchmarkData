@@ -27,16 +27,37 @@ jobs:
         name: Build pkg
         uses: julia-actions/julia-buildpkg@v1
       -
-        id: benchmark
-        name: Run benchmark
         run: |
-          flux=true julia --project=. benchmark/benchmarks.jl
+          echo "# Hello World!" > report.md
+      -
+        name: Upload report
+        uses: actions/upload-artifact@v2
+        with:
+          name: report.md
+          path: report.md
+  Comment:
+    needs: [benchmark]
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.repository != '' && github.event.inputs.pr_id != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Download report
+        uses: actions/download-artifact@v3
+        with:
+          name: report.md
+      #-
+      #  name: Create comment on ${{ github.event.inputs.repository }} - ${{ github.event.inputs.pr_id }}
+      #  uses: mshick/add-pr-comment@v2
+      #  with:
+      #    repo-owner: ${{ github.event.inputs.repo_owner }}
+      #    repo-name: ${{ github.event.inputs.repo_name }}
+      #    issue: ${{ github.event.inputs.pr_id }}
+      #    message-path: report.md
       -
         name: Comment
         uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: ${{ github.event.inputs.pr_id }}
           repository: ${{ github.event.inputs.repository }}
-          token: ${{ secrets.APP_CLIENT_TOKEN }}
-          body: |
-            Hi! This is a comment by GitHub Actions!
+          token: ${{ secrets.PAT }}
+          body-path: report.md
