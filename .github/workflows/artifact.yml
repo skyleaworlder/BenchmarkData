@@ -1,0 +1,36 @@
+name: Upload Download Artifacts
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Run a one-line script
+        run: |
+          mkdir haha
+          echo "hello world" > haha/a.txt
+          echo "hehehehehehe" > haha/b.txt
+          echo "hahahahaha" > haha/c.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: i-dont-know
+          path: |
+            haha/a.txt
+            haha/b.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: i-do-know
+          path: |
+            haha/c.txt
+          
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v2
+      - run: |
+          ls -al
+          ls -al haha
+          ls -al i-dont-know
+          ls -al i-do-know
+          ls -al i-dont-know/haha
