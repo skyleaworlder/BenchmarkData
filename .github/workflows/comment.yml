@@ -1,0 +1,44 @@
+name: comment-test
+
+on:
+  workflow_dispatch:
+    inputs:
+      repository:
+        type: string
+        description: repo name
+      url:
+        type: string
+        description: pr url
+      pr_id:
+        type: string
+        description: pr id
+
+jobs:
+  Comment:
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.repository != '' && github.event.inputs.pr_id != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: get app info
+        id: get-app-info
+        uses: tibdex/github-app-token@v1
+        with: 
+          app_id: 295785
+          installation_id: 34411676
+          private_key: ${{ secrets.PAT }}
+      #-
+      #  name: Create comment on ${{ github.event.inputs.repository }} - ${{ github.event.inputs.pr_id }}
+      #  uses: mshick/add-pr-comment@v2
+      #  with:
+      #    repo-owner: ${{ github.event.inputs.repo_owner }}
+      #    repo-name: ${{ github.event.inputs.repo_name }}
+      #    issue: ${{ github.event.inputs.pr_id }}
+      #    message-path: report.md
+      -
+        name: Comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          issue-number: ${{ github.event.inputs.pr_id }}
+          repository: ${{ github.event.inputs.repository }}
+          token: ${{ steps.get-app-info.outputs.token }}
+          body: |
+            "Hi! I'm a bot created by skyleaworlder!"
