@@ -1,6 +1,8 @@
 name: Upload Download Artifacts
 
 on:
+  pull_request:
+    types: [ labeled ]
   workflow_dispatch:
 
 jobs:
@@ -8,6 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Get App Installation Token
+        uses: tibdex/github-app-token@v1
+        with: 
+          app_id: 295785
+          installation_id: 39974503
+          private_key: ${{ secrets.APP_CLIENT_TOKEN }}
       - name: Run a one-line script
         run: |
           mkdir haha
