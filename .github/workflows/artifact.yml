@@ -8,6 +8,15 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get App Installation Token
+        uses: tibdex/github-app-token@v1
+        with: 
+          app_id: 295785
+          installation_id: 39974503
+          private_key: ${{ secrets.PRIVATE_KEY }}
   build:
     runs-on: ubuntu-latest
     steps:
