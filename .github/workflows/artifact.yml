@@ -2,7 +2,7 @@ name: Upload Download Artifacts
 
 on:
   pull_request:
-    types: [ labeled ]
+    types: [ unlabeled ]
   pull_request_target:
     types: [ labeled ]
   workflow_dispatch:
