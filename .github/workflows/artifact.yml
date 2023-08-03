@@ -26,6 +26,9 @@ jobs:
           app_id: 295785
           installation_id: 39974503
           private_key: ${{ secrets.APP_CLIENT_TOKEN }}
+  artifact:
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v3
       - name: Run a one-line script
         run: |
